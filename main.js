@@ -1,6 +1,7 @@
 //importa a biblioteca do three.js, THREE é o objeto que contém toda a info da biblioteca
 import * as THREE from 'three';
-import { color } from 'three/webgpu';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
 
 // cria uma cena onde podemos adicionar varias coisas
 const scene = new THREE.Scene(); 
@@ -25,6 +26,8 @@ scene.add( arena );
 // ajusta a camera na posicao z
 camera.position.z = 20;
 
+orbit = new OrbitControls(camera, renderer.domElement);
+
 // cria as variaveis a serem utilizadas
 const speed = 0.01;
 const moveSpeed = 0.1;
@@ -33,7 +36,7 @@ const moveSpeed = 0.1;
 document.addEventListener('keydown', onDocumentKeyDown);
 
 // define o movimento do cubo a depender do evento 
-function onDocumentKeyDown(event) {
+/* function onDocumentKeyDown(event) {
     switch (event.key) {
         case 'w':
             arena.position.z -= moveSpeed; // frente: eixo Z
@@ -54,7 +57,7 @@ function onDocumentKeyDown(event) {
             arena.position.y -= moveSpeed;
             break;
     }
-}
+} */
 
 
 // loop que irá "animar" a cena
