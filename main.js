@@ -14,7 +14,7 @@ renderer.setAnimationLoop( animate );
 document.body.appendChild( renderer.domElement );
 
 // changes the background color
-scene.background = new THREE.Color ( 0x1FDE9A );
+scene.background = new THREE.Color ( 0xA0A9E7 );
 
 // creates a light in the scene (improves visibility)
 const light = new THREE.DirectionalLight(0xffffff, 4);
