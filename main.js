@@ -2,6 +2,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { roughness } from 'three/webgpu'; // one of the properties of the material used in the arena
+import { STLExporter } from 'three/addons/exporters/STLExporter.js';
+import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
+
 
 // creates scene and perspective camera
 const scene = new THREE.Scene(); 
@@ -44,6 +47,36 @@ const borderMaterial = new THREE.MeshStandardMaterial( { // material of the whit
 const border = new THREE.Mesh( borderGeometry, borderMaterial ); // adds the material and geometry to the border
 scene.add( border ); // adds the border to the scene
 
+// creates base using  STLLoader 
+const base = new STLLoader();
+base.load ('./BASE_4.STL', function (geometry) { // imports .stl file and defines it as geometry
+    const baseMaterial = new THREE.MeshBasicMaterial( { color: 0x07F707} ); 
+    const baseMesh = new THREE.Mesh (geometry, baseMaterial) 
+    baseMesh.rotation.x = -1.58;
+    baseMesh.position.y += 4.4; // adjust base position
+
+    document.addEventListener ('keydown', onDocumentKeyDown);
+    function onDocumentKeyDown(event) {
+        switch (event.key) {
+            case 'w':
+                baseMesh.position.z += 3;
+                break;
+            case 'a':
+                baseMesh.position.x += 3;
+                break;
+            case 'd':
+                baseMesh.position.x -= 3;
+                break;
+            case 's':
+                baseMesh.position.z -= 3;
+                break;
+        }
+    }
+    
+    scene.add(baseMesh) // adds to scene 
+});
+
+
 // adjusts the camera on the z position
 camera.position.z = 500;
 camera.position.y = 50;
@@ -54,6 +87,8 @@ const moveSpeed = 0.1;
 
 // creates the orbit that allows movement around the scene with the mouse
 orbit = new OrbitControls(camera, renderer.domElement); 
+
+
 
 // loop that will "animate" the scene
 function animate() {
